@@ -1,9 +1,9 @@
 
---- Job Ex2-1.gms Start 09/24/24 16:02:11 47.6.0 c2de9d6d WEX-WEI x86 64bit/MS Windows
+--- Job Ex2-1-LaborConstraint.gms Start 09/24/24 16:04:28 47.6.0 c2de9d6d WEX-WEI x86 64bit/MS Windows
 --- Applying:
     C:\GAMS\47\gmsprmNT.txt
 --- GAMS Parameters defined
-    Input "C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\CEE6410-Safely\Ex2-1.gms"
+    Input "C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\CEE6410-Safely\Ex2-1-LaborConstraint.gms"
     PageSize 0
     ScrDir "C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\CEE6410-Safely\225a\"
     SysDir C:\GAMS\47\
@@ -21,16 +21,16 @@ Licensee: CEE 6410 Water Resources Systems Analysis      G240923|0002AO-GEN
 Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
 GAMS 47.6.0   Copyright (C) 1987-2024 GAMS Development. All rights reserved
 --- Starting compilation
---- Ex2-1.gms(70) 3 Mb
---- Starting execution: elapsed 0:00:00.031
+--- Ex2-1-LaborConstraint.gms(72) 3 Mb
+--- Starting execution: elapsed 0:00:00.032
 --- Generating LP model PLANTING
---- Ex2-1.gms(68) 4 Mb
----   3 rows  3 columns  7 non-zeroes
+--- Ex2-1-LaborConstraint.gms(70) 4 Mb
+---   4 rows  3 columns  9 non-zeroes
 --- Range statistics (absolute non-zero finite values)
 --- RHS       [min, max] : [ 1.200E+04, 4.000E+06] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E+00, 2.000E+03]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.082
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.063
 
 IBM ILOG CPLEX   47.6.0 c2de9d6d Sep 12, 2024          WEI x86 64bit/MS Window
 
@@ -49,12 +49,13 @@ CPXPARAM_MIP_Pool_Capacity                       0
 CPXPARAM_MIP_Tolerances_AbsMIPGap                0
 Tried aggregator 1 time.
 LP Presolve eliminated 0 rows and 1 columns.
-Reduced LP has 2 rows, 2 columns, and 4 nonzeros.
+Reduced LP has 3 rows, 2 columns, and 6 nonzeros.
 Presolve time = 0.00 sec. (0.00 ticks)
 
 Iteration      Dual Objective            In Variable           Out Variable
-     1 sI            0.000000            X(Tomatoes)RES_CONSTRAIN(Lan slack
-     2           20000.000000            X(Eggplant)RES_CONSTRAIN(Wat slack
+     1 sI            0.000000            X(Tomatoes)RES_CONSTRAIN(Lab slack
+     2           22333.333333            X(Eggplant)RES_CONSTRAIN(Wat slack
+     3           20000.000000RES_CONSTRAIN(Lab slackRES_CONSTRAIN(Lan slack
 
 --- LP status (1): optimal.
 --- Cplex Time: 0.00sec (det. 0.01 ticks)
@@ -65,4 +66,4 @@ Objective:        20000.000000
 
 --- Reading solution for model PLANTING
 *** Status: Normal completion
---- Job Ex2-1.gms Stop 09/24/24 16:02:12 elapsed 0:00:00.317
+--- Job Ex2-1-LaborConstraint.gms Stop 09/24/24 16:04:29 elapsed 0:00:00.271

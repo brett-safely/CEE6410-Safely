@@ -1,0 +1,432 @@
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/09/24 19:07:12 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  *** Reservoir Mass balance for HW#5. General case and implementation in GAMS
+   2  *** Brett Safely
+   3  *** October 9, 2024
+   4  *** a02275039@usu.edu
+   5   
+   6  * 1. DEFINE the SETS
+   7  SETS
+   8     t  time periods (months) /1*6/
+   9     res resources /Inflow, Hydropower, Irrigation, Spill, Storage/;
+  10   
+  11  * 2. DEFINE input data
+  12  TABLE data(t,*)  Reservoir Data
+  13            inflow   hydro_benefit  irr_benefit
+  14     1         2          1.6           1.0
+  15     2         2          1.7           1.2
+  16     3         3          1.8           1.9
+  17     4         4          1.9           2.0
+  18     5         3          2.0           2.2
+  19     6         2          2.0           2.2;
+  20   
+  21  * Separate these into distinct parameters
+  22  PARAMETERS
+  23     inflow(t)           Inflow per month
+  24     hydro_benefit(t)    Hydropower benefit per unit ($)
+  25     irr_benefit(t)      Irrigation benefit per unit ($);
+  26   
+  27  * Assign values from the table to the parameters
+  28  inflow(t)         = data(t,'inflow');
+  29  hydro_benefit(t)  = data(t,'hydro_benefit');
+  30  irr_benefit(t)    = data(t,'irr_benefit');
+  31   
+  32  SCALARS
+  33     initial_storage /5/
+  34     max_storage /9/
+  35     min_FlowA /1/
+  36     turbine_capacity /4/;
+  37   
+  38  * 3. DEFINE the variables
+  39  VARIABLES
+  40     VPROFIT  total economic benefit ($)
+  41     hydro(t)  hydropower release (units)
+  42     irrig(t)  irrigation release (units)
+  43     storage(t) reservoir storage (units at the end of each period)
+  44     spill(t) spill water (units);
+  45   
+  46  POSITIVE VARIABLES
+  47      hydro(t)
+  48      irrig(t)
+  49      storage(t)
+  50      spill(t);
+  51   
+  52  * 4. COMBINE variables and data in equations
+  53  EQUATIONS
+  54     ResBalance(t) Reservoir mass balance
+  55     FlowA(t) Minimum river flow
+  56     HydroCapacity(t) Turbine capacity limit
+  57     PROFIT Equation for total profit
+  58     MaxStorage Maximum storage level in reservoir
+  59     FinalStorage Adds constraint that end storage = initial storage;
+  60   
+  61  * Objective function for total profit
+  62  PROFIT.. VPROFIT =E= SUM(t, hydro_benefit(t)*hydro(t) + irr_benefit(t)*irrig(t));
+  63   
+  64  * Reservoir mass balance (Approach 1: Storage at the end of period t)
+  65  ResBalance(t).. storage(t) =E= storage(t-1)$(ord(t) gt 1) + inflow(t) - hydro(t) - irrig(t) - spill(t)
+  66     + initial_storage$(ord(t) eq 1);
+  67   
+  68  * Minimum river flow requirement
+  69  FlowA(t).. hydro(t) + spill(t) -irrig(t) =G= min_FlowA;
+  70   
+  71  * Turbine capacity constraint
+  72  HydroCapacity(t).. hydro(t) =L= turbine_capacity;
+  73   
+  74  * Max storage in reservoir constraint equation
+  75  MaxStorage(t).. storage(t) =L= max_storage;
+  76   
+  77  * Final Storage constraint equation
+  78  FinalStorage.. storage('6') =G= initial_storage;
+  79   
+  80  * 5. DEFINE the MODEL from the EQUATIONS
+  81  MODEL ReservoirOperation /PROFIT, ResBalance, FlowA, HydroCapacity, MaxStorage, FinalStorage/;
+  82   
+  83  * 6. SOLVE the MODEL
+  84  SOLVE ReservoirOperation USING LP MAXIMIZING VPROFIT;
+  85   
+  86  * 7. Click File menu => RUN (F9) or Solve icon and examine solution report in .LST file
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  47.6.0 c2de9d6d WEX-WEI
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/09/24 19:07:12 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE ReservoirOperation Using LP From line 84
+
+
+---- PROFIT  =E=  Equation for total profit
+
+PROFIT..  VPROFIT - 1.6*hydro(1) - 1.7*hydro(2) - 1.8*hydro(3) - 1.9*hydro(4) - 2*hydro(5) - 2*hydro(6) - irrig(1) - 1.2*irrig(2) - 1.9*irrig(3) - 2*irrig(4) - 2.2*irrig(5) - 2.2*irrig(6) =E= 0 ; (LHS = 0)
+     
+
+---- ResBalance  =E=  Reservoir mass balance
+
+ResBalance(1)..  hydro(1) + irrig(1) + storage(1) + spill(1) =E= 7 ; (LHS = 0, INFES = 7 ****)
+     
+ResBalance(2)..  hydro(2) + irrig(2) - storage(1) + storage(2) + spill(2) =E= 2 ; (LHS = 0, INFES = 2 ****)
+     
+ResBalance(3)..  hydro(3) + irrig(3) - storage(2) + storage(3) + spill(3) =E= 3 ; (LHS = 0, INFES = 3 ****)
+     
+REMAINING 3 ENTRIES SKIPPED
+
+
+---- FlowA  =G=  Minimum river flow
+
+FlowA(1)..  hydro(1) - irrig(1) + spill(1) =G= 1 ; (LHS = 0, INFES = 1 ****)
+     
+FlowA(2)..  hydro(2) - irrig(2) + spill(2) =G= 1 ; (LHS = 0, INFES = 1 ****)
+     
+FlowA(3)..  hydro(3) - irrig(3) + spill(3) =G= 1 ; (LHS = 0, INFES = 1 ****)
+     
+REMAINING 3 ENTRIES SKIPPED
+
+
+---- HydroCapacity  =L=  Turbine capacity limit
+
+HydroCapacity(1)..  hydro(1) =L= 4 ; (LHS = 0)
+     
+HydroCapacity(2)..  hydro(2) =L= 4 ; (LHS = 0)
+     
+HydroCapacity(3)..  hydro(3) =L= 4 ; (LHS = 0)
+     
+REMAINING 3 ENTRIES SKIPPED
+
+
+---- MaxStorage  =L=  Maximum storage level in reservoir
+
+MaxStorage(1)..  storage(1) =L= 9 ; (LHS = 0)
+     
+MaxStorage(2)..  storage(2) =L= 9 ; (LHS = 0)
+     
+MaxStorage(3)..  storage(3) =L= 9 ; (LHS = 0)
+     
+REMAINING 3 ENTRIES SKIPPED
+
+
+---- FinalStorage  =G=  Adds constraint that end storage = initial storage
+
+FinalStorage..  storage(6) =G= 5 ; (LHS = 0, INFES = 5 ****)
+     
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/09/24 19:07:12 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE ReservoirOperation Using LP From line 84
+
+
+---- VPROFIT  total economic benefit ($)
+
+VPROFIT
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       PROFIT
+
+
+---- hydro  hydropower release (units)
+
+hydro(1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -1.6     PROFIT
+        1       ResBalance(1)
+        1       FlowA(1)
+        1       HydroCapacity(1)
+
+hydro(2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -1.7     PROFIT
+        1       ResBalance(2)
+        1       FlowA(2)
+        1       HydroCapacity(2)
+
+hydro(3)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -1.8     PROFIT
+        1       ResBalance(3)
+        1       FlowA(3)
+        1       HydroCapacity(3)
+
+REMAINING 3 ENTRIES SKIPPED
+
+---- irrig  irrigation release (units)
+
+irrig(1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -1       PROFIT
+        1       ResBalance(1)
+       -1       FlowA(1)
+
+irrig(2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -1.2     PROFIT
+        1       ResBalance(2)
+       -1       FlowA(2)
+
+irrig(3)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -1.9     PROFIT
+        1       ResBalance(3)
+       -1       FlowA(3)
+
+REMAINING 3 ENTRIES SKIPPED
+
+---- storage  reservoir storage (units at the end of each period)
+
+storage(1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       ResBalance(1)
+       -1       ResBalance(2)
+        1       MaxStorage(1)
+
+storage(2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       ResBalance(2)
+       -1       ResBalance(3)
+        1       MaxStorage(2)
+
+storage(3)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       ResBalance(3)
+       -1       ResBalance(4)
+        1       MaxStorage(3)
+
+REMAINING 3 ENTRIES SKIPPED
+
+---- spill  spill water (units)
+
+spill(1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       ResBalance(1)
+        1       FlowA(1)
+
+spill(2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       ResBalance(2)
+        1       FlowA(2)
+
+spill(3)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       ResBalance(3)
+        1       FlowA(3)
+
+REMAINING 3 ENTRIES SKIPPED
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/09/24 19:07:12 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE ReservoirOperation Using LP From line 84
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.000E+00, 9.000E+00] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 2.200E+00]
+
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/09/24 19:07:12 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE ReservoirOperation Using LP From line 84
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           6     SINGLE EQUATIONS           26
+BLOCKS OF VARIABLES           5     SINGLE VARIABLES           25
+NON ZERO ELEMENTS            73
+
+
+GENERATION TIME      =        0.046 SECONDS      4 MB  47.6.0 c2de9d6d WEX-WEI
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/09/24 19:07:12 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE ReservoirOperation Using LP From line 84
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   ReservoirOperation   OBJECTIVE  VPROFIT
+     TYPE    LP                   DIRECTION  MAXIMIZE
+     SOLVER  CPLEX                FROM LINE  84
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE               31.5500
+
+ RESOURCE USAGE, LIMIT          0.016 10000000000.000
+ ITERATION COUNT, LIMIT        18    2147483647
+*** This solver runs with a community license.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.02sec (det. 0.06 ticks)
+
+
+Optimal solution found
+Objective:           31.550000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU PROFIT              .              .              .             1.0000      
+
+  PROFIT  Equation for total profit
+
+---- EQU ResBalance  Reservoir mass balance
+
+         LOWER          LEVEL          UPPER         MARGINAL
+
+1         7.0000         7.0000         7.0000         1.8500      
+2         2.0000         2.0000         2.0000         1.8500      
+3         3.0000         3.0000         3.0000         1.8500      
+4         4.0000         4.0000         4.0000         1.9500      
+5         3.0000         3.0000         3.0000         2.1000      
+6         2.0000         2.0000         2.0000         2.1000      
+
+---- EQU FlowA  Minimum river flow
+
+         LOWER          LEVEL          UPPER         MARGINAL
+
+1         1.0000         1.0000        +INF           -0.2500      
+2         1.0000         1.0000        +INF           -0.1500      
+3         1.0000         1.0000        +INF           -0.0500      
+4         1.0000         1.0000        +INF           -0.0500      
+5         1.0000         1.0000        +INF           -0.1000      
+6         1.0000         1.0000        +INF           -0.1000      
+
+---- EQU HydroCapacity  Turbine capacity limit
+
+         LOWER          LEVEL          UPPER         MARGINAL
+
+1        -INF            1.0000         4.0000          .          
+2        -INF            1.0000         4.0000          .          
+3        -INF            1.0000         4.0000          .          
+4        -INF            2.5000         4.0000          .          
+5        -INF            2.0000         4.0000          .          
+6        -INF            3.5000         4.0000          .          
+
+---- EQU MaxStorage  Maximum storage level in reservoir
+
+         LOWER          LEVEL          UPPER         MARGINAL
+
+1        -INF            6.0000         9.0000          .          
+2        -INF            7.0000         9.0000          .          
+3        -INF            9.0000         9.0000         0.1000      
+4        -INF            9.0000         9.0000         0.1500      
+5        -INF            9.0000         9.0000         EPS         
+6        -INF            5.0000         9.0000          .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU FinalStor~         5.0000         5.0000        +INF           -2.1000      
+
+  FinalStorage  Adds constraint that end storage = initial storage
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR VPROFIT           -INF           31.5500        +INF             .          
+
+  VPROFIT  total economic benefit ($)
+
+---- VAR hydro  hydropower release (units)
+
+         LOWER          LEVEL          UPPER         MARGINAL
+
+1          .             1.0000        +INF             .          
+2          .             1.0000        +INF             .          
+3          .             1.0000        +INF             .          
+4          .             2.5000        +INF             .          
+5          .             2.0000        +INF             .          
+6          .             3.5000        +INF             .          
+
+---- VAR irrig  irrigation release (units)
+
+         LOWER          LEVEL          UPPER         MARGINAL
+
+1          .              .            +INF           -1.1000      
+2          .              .            +INF           -0.8000      
+3          .              .            +INF             .          
+4          .             1.5000        +INF             .          
+5          .             1.0000        +INF             .          
+6          .             2.5000        +INF             .          
+
+---- VAR storage  reservoir storage (units at the end of each period)
+
+         LOWER          LEVEL          UPPER         MARGINAL
+
+1          .             6.0000        +INF             .          
+2          .             7.0000        +INF             .          
+3          .             9.0000        +INF             .          
+4          .             9.0000        +INF             .          
+5          .             9.0000        +INF             .          
+6          .             5.0000        +INF             .          
+
+---- VAR spill  spill water (units)
+
+         LOWER          LEVEL          UPPER         MARGINAL
+
+1          .              .            +INF           -1.6000      
+2          .              .            +INF           -1.7000      
+3          .              .            +INF           -1.8000      
+4          .              .            +INF           -1.9000      
+5          .              .            +INF           -2.0000      
+6          .              .            +INF           -2.0000      
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+
+
+EXECUTION TIME       =        0.140 SECONDS      4 MB  47.6.0 c2de9d6d WEX-WEI
+
+
+USER: CEE 6410 Water Resources Systems Analysis      G240923|0002AO-GEN
+      Utah State University, Utah Water Research Laboratory     DCE3763
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\HW#5\Safely.Brett-CEE6410-HW#5.gms
+Output     C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\HW#5\Safely.Brett-CEE6410-HW#5.lst

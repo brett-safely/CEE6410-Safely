@@ -1,0 +1,28 @@
+B 3 C o m p i l a t i o n
+B 97 Equation Listing    SOLVE ReservoirOperation Using LP From line 84
+D 100 PROFIT
+D 105 ResBalance
+D 116 FlowA
+D 127 HydroCapacity
+D 138 MaxStorage
+D 149 FinalStorage
+B 155 Column Listing      SOLVE ReservoirOperation Using LP From line 84
+E 158 VPROFIT
+E 165 hydro
+E 190 irrig
+E 212 storage
+E 234 spill
+B 254 Range Statistics    SOLVE ReservoirOperation Using LP From line 84
+B 265 Model Statistics    SOLVE ReservoirOperation Using LP From line 84
+B 278 Solution Report     SOLVE ReservoirOperation Using LP From line 84
+F 311 PROFIT
+F 315 ResBalance
+F 326 FlowA
+F 337 HydroCapacity
+F 348 MaxStorage
+F 361 FinalStorage
+G 367 VPROFIT
+G 371 hydro
+G 382 irrig
+G 393 storage
+G 404 spill

@@ -1,0 +1,396 @@
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/14/24 17:35:20 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+      CEE 6410 - Water Resources Systems Analysis
+      Problem 7.1 from Bishop Et Al Text (https://digitalcommons.usu.edu/ecstatic_all/76/)
+       
+      THE SOLUTION:
+      Uses General Algebraic Modeling System to Solve this Linear Program
+       
+      Brett Safely, A02275039 a02275039@usu.edu
+  10   
+  11  SETS
+  12      src  water supply sources /hd "high dam", ld "low dam", pump "pump"/
+  13      t    seasons /1, 2/;
+  14   
+  15  PARAMETERS
+  16      CapCost(src) capital cost ($ per year)
+  17          /hd 10000, ld 6000, pump 8000/
+  18      OpCost(src) operating cost ($ per ac-ft)
+  19          /hd 0, ld 0, pump 20/
+  20      MaxCapacity(src) maximum capacity of source (ac-ft per year)
+  21          /hd 700, ld 300, pump 803/
+  22      MinUse(src) minimum required use of source (ac-ft per year)
+  23          /hd 0, ld 0, pump 0/
+  24      RiverInflow(t) river inflow (ac-ft)
+  25          /1 600, 2 200/
+  26      IrrigationDemand(t) irrigation demand (ac-ft per year)
+  27          /1 1.0, 2 3.0/
+  28      RevenuePerAcre  revenue per acre irrigated ($ per year) /300/;
+  29   
+  30  VARIABLES
+  31      I(src) binary decision to build source (1=yes and 0=no)
+  32      X(src,t) volume of water provided by source (ac-ft per year)
+  33      TCOST  total capital and operating costs of supply actions ($)
+  34      RevenueGenerated total revenue generated ($)
+  35      AcresIrrigated(t) acres irrigated in season t;
+  36   
+  37  BINARY VARIABLES I;
+  38  POSITIVE VARIABLES X, AcresIrrigated;
+  39   
+  40  EQUATIONS
+  41      COST            total cost ($) and objective function value
+  42      MaxCap(src,t)   maximum capacity of source when built (ac-ft per year)
+  43      MinReqUse(src,t) minimum required use of source when built (ac-ft per year)
+  44      MeetDemand(t)   meet irrigation demand (ac-ft per year)
+  45      RevenueEq       calculate total revenue generated ($)
+  46      IrrigatedAcresEq(t) acres irrigated based on water use;
+  47   
+  48  COST..
+  49      TCOST =E= SUM(src, CapCost(src) * I(src) + SUM(t, OpCost(src) * X(src,t)));
+  50   
+  51  MaxCap(src,t) ..
+  52      X(src,t) =L= MaxCapacity(src) * I(src);
+  53   
+  54  MinReqUse(src,t) ..
+  55      X(src,t) =G= MinUse(src) * I(src);
+  56   
+  57  MeetDemand(t) ..
+  58      SUM(src, X(src,t)) =G= IrrigationDemand(t);
+  59   
+  60  RevenueEq..
+  61      RevenueGenerated =E= SUM(t, AcresIrrigated(t) * RevenuePerAcre);
+  62   
+  63  IrrigatedAcresEq(t) ..
+  64      AcresIrrigated(t) =E= SUM(src, X(src,t)) / IrrigationDemand(t);
+  65   
+  66  MODEL IrrigationModel /ALL/;
+  67   
+  68  SOLVE IrrigationModel USING MIP MINIMIZING TCOST;
+  69   
+  70  DISPLAY X.L, I.L, TCOST.L, RevenueGenerated.L, AcresIrrigated.L;
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  47.6.0 c2de9d6d WEX-WEI
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/14/24 17:35:20 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE IrrigationModel Using MIP From line 68
+
+
+---- COST  =E=  total cost ($) and objective function value
+
+COST..  - 10000*I(hd) - 6000*I(ld) - 8000*I(pump) - 20*X(pump,1) - 20*X(pump,2) + TCOST =E= 0 ; (LHS = 0)
+     
+
+---- MaxCap  =L=  maximum capacity of source when built (ac-ft per year)
+
+MaxCap(hd,1)..  - 700*I(hd) + X(hd,1) =L= 0 ; (LHS = 0)
+     
+MaxCap(hd,2)..  - 700*I(hd) + X(hd,2) =L= 0 ; (LHS = 0)
+     
+MaxCap(ld,1)..  - 300*I(ld) + X(ld,1) =L= 0 ; (LHS = 0)
+     
+REMAINING 3 ENTRIES SKIPPED
+
+
+---- MinReqUse  =G=  minimum required use of source when built (ac-ft per year)
+
+MinReqUse(hd,1)..  X(hd,1) =G= 0 ; (LHS = 0)
+     
+MinReqUse(hd,2)..  X(hd,2) =G= 0 ; (LHS = 0)
+     
+MinReqUse(ld,1)..  X(ld,1) =G= 0 ; (LHS = 0)
+     
+REMAINING 3 ENTRIES SKIPPED
+
+
+---- MeetDemand  =G=  meet irrigation demand (ac-ft per year)
+
+MeetDemand(1)..  X(hd,1) + X(ld,1) + X(pump,1) =G= 1 ; (LHS = 0, INFES = 1 ****)
+     
+MeetDemand(2)..  X(hd,2) + X(ld,2) + X(pump,2) =G= 3 ; (LHS = 0, INFES = 3 ****)
+     
+
+---- RevenueEq  =E=  calculate total revenue generated ($)
+
+RevenueEq..  RevenueGenerated - 300*AcresIrrigated(1) - 300*AcresIrrigated(2) =E= 0 ; (LHS = 0)
+     
+
+---- IrrigatedAcresEq  =E=  acres irrigated based on water use
+
+IrrigatedAcresEq(1)..  - X(hd,1) - X(ld,1) - X(pump,1) + AcresIrrigated(1) =E= 0 ; (LHS = 0)
+     
+IrrigatedAcresEq(2)..  - 0.333333333333333*X(hd,2) - 0.333333333333333*X(ld,2) - 0.333333333333333*X(pump,2) + AcresIrrigated(2) =E= 0 ; (LHS = 0)
+     
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/14/24 17:35:20 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE IrrigationModel Using MIP From line 68
+
+
+---- I  binary decision to build source (1=yes and 0=no)
+
+I(hd)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+   -10000       COST
+     -700       MaxCap(hd,1)
+     -700       MaxCap(hd,2)
+
+I(ld)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+    -6000       COST
+     -300       MaxCap(ld,1)
+     -300       MaxCap(ld,2)
+
+I(pump)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+    -8000       COST
+     -803       MaxCap(pump,1)
+     -803       MaxCap(pump,2)
+
+
+---- X  volume of water provided by source (ac-ft per year)
+
+X(hd,1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       MaxCap(hd,1)
+        1       MinReqUse(hd,1)
+        1       MeetDemand(1)
+       -1       IrrigatedAcresEq(1)
+
+X(hd,2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       MaxCap(hd,2)
+        1       MinReqUse(hd,2)
+        1       MeetDemand(2)
+       -0.3333  IrrigatedAcresEq(2)
+
+X(ld,1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       MaxCap(ld,1)
+        1       MinReqUse(ld,1)
+        1       MeetDemand(1)
+       -1       IrrigatedAcresEq(1)
+
+REMAINING 3 ENTRIES SKIPPED
+
+---- TCOST  total capital and operating costs of supply actions ($)
+
+TCOST
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       COST
+
+
+---- RevenueGenerated  total revenue generated ($)
+
+RevenueGenerated
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       RevenueEq
+
+
+---- AcresIrrigated  acres irrigated in season t
+
+AcresIrrigated(1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+     -300       RevenueEq
+        1       IrrigatedAcresEq(1)
+
+AcresIrrigated(2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+     -300       RevenueEq
+        1       IrrigatedAcresEq(2)
+
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/14/24 17:35:20 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE IrrigationModel Using MIP From line 68
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.000E+00, 3.000E+00] - Zero values observed as well
+Bound     [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+Matrix    [min, max] : [ 3.333E-01, 1.000E+04]
+
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/14/24 17:35:20 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE IrrigationModel Using MIP From line 68
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           6     SINGLE EQUATIONS           18
+BLOCKS OF VARIABLES           5     SINGLE VARIABLES           13
+NON ZERO ELEMENTS            41     DISCRETE VARIABLES          3
+
+
+GENERATION TIME      =        0.250 SECONDS      4 MB  47.6.0 c2de9d6d WEX-WEI
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/14/24 17:35:20 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE IrrigationModel Using MIP From line 68
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   IrrigationModel     OBJECTIVE  TCOST
+     TYPE    MIP                 DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  68
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE             6000.0000
+
+ RESOURCE USAGE, LIMIT          0.016 10000000000.000
+ ITERATION COUNT, LIMIT         0    2147483647
+*** This solver runs with a community license.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- MIP status (101): integer optimal solution.
+--- Cplex Time: 0.02sec (det. 0.03 ticks)
+
+--- Returning a primal only solution to GAMS (marginals all set to NA).
+--- Fixing integer variables and solving final LP...
+
+
+--- Fixed MIP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.01 ticks)
+
+
+Proven optimal solution
+MIP Solution:         6000.000000    (0 iterations, 0 nodes)
+Final Solve:          6000.000000    (0 iterations)
+
+Best possible:        6000.000000
+Absolute gap:            0.000000
+Relative gap:            0.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU COST                .              .              .             1.0000      
+
+  COST  total cost ($) and objective function value
+
+---- EQU MaxCap  maximum capacity of source when built (ac-ft per year)
+
+              LOWER          LEVEL          UPPER         MARGINAL
+
+hd  .1        -INF             .              .              .          
+hd  .2        -INF             .              .              .          
+ld  .1        -INF         -299.0000          .              .          
+ld  .2        -INF         -297.0000          .              .          
+pump.1        -INF             .              .              .          
+pump.2        -INF             .              .              .          
+
+---- EQU MinReqUse  minimum required use of source when built (ac-ft per year)
+
+              LOWER          LEVEL          UPPER         MARGINAL
+
+hd  .1          .              .            +INF             .          
+hd  .2          .              .            +INF             .          
+ld  .1          .             1.0000        +INF             .          
+ld  .2          .             3.0000        +INF             .          
+pump.1          .              .            +INF             .          
+pump.2          .              .            +INF             .          
+
+---- EQU MeetDemand  meet irrigation demand (ac-ft per year)
+
+         LOWER          LEVEL          UPPER         MARGINAL
+
+1         1.0000         1.0000        +INF            EPS         
+2         3.0000         3.0000        +INF            EPS         
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU RevenueEq           .              .              .             EPS         
+
+  RevenueEq  calculate total revenue generated ($)
+
+---- EQU IrrigatedAcresEq  acres irrigated based on water use
+
+         LOWER          LEVEL          UPPER         MARGINAL
+
+1          .              .              .             EPS         
+2          .              .              .             EPS         
+
+---- VAR I  binary decision to build source (1=yes and 0=no)
+
+            LOWER          LEVEL          UPPER         MARGINAL
+
+hd            .              .             1.0000     10000.0000      
+ld            .             1.0000         1.0000      6000.0000      
+pump          .              .             1.0000      8000.0000      
+
+---- VAR X  volume of water provided by source (ac-ft per year)
+
+              LOWER          LEVEL          UPPER         MARGINAL
+
+hd  .1          .              .            +INF            EPS         
+hd  .2          .              .            +INF            EPS         
+ld  .1          .             1.0000        +INF             .          
+ld  .2          .             3.0000        +INF             .          
+pump.1          .              .            +INF           20.0000      
+pump.2          .              .            +INF           20.0000      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR TCOST             -INF         6000.0000        +INF             .          
+---- VAR RevenueGe~        -INF          600.0000        +INF             .          
+
+  TCOST  total capital and operating costs of supply actions ($)
+  RevenueGenerated  total revenue generated ($)
+
+---- VAR AcresIrrigated  acres irrigated in season t
+
+         LOWER          LEVEL          UPPER         MARGINAL
+
+1          .             1.0000        +INF             .          
+2          .             1.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/14/24 17:35:20 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     70 VARIABLE X.L  volume of water provided by source (ac-ft per year)
+
+               1           2
+
+ld         1.000       3.000
+
+
+----     70 VARIABLE I.L  binary decision to build source (1=yes and 0=no)
+
+ld 1.000
+
+
+----     70 VARIABLE TCOST.L               =     6000.000  total capital and operating costs of supply actions ($)
+            VARIABLE RevenueGenerated.L    =      600.000  total revenue generated ($)
+
+----     70 VARIABLE AcresIrrigated.L  acres irrigated in season t
+
+1 1.000,    2 1.000
+
+
+
+EXECUTION TIME       =        0.719 SECONDS      4 MB  47.6.0 c2de9d6d WEX-WEI
+
+
+USER: CEE 6410 Water Resources Systems Analysis      G240923|0002AO-GEN
+      Utah State University, Utah Water Research Laboratory     DCE3763
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\HW#6\Safely.Brett-CEE6410-HW#6Integer.gms
+Output     C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\HW#6\Safely.Brett-CEE6410-HW#6Integer.lst

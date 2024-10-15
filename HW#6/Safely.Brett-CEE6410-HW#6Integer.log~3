@@ -1,0 +1,63 @@
+
+--- Job Safely.Brett-CEE6410-HW#6Integer.gms Start 10/14/24 17:04:31 47.6.0 c2de9d6d WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\47\gmsprmNT.txt
+--- GAMS Parameters defined
+    Input "C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\HW#6\Safely.Brett-CEE6410-HW#6Integer.gms"
+    PageSize 0
+    ScrDir "C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\HW#6\225a\"
+    SysDir C:\GAMS\47\
+    LogOption 3
+    ErrMsg 1
+    ErrorLog 99
+    IDE 1
+    LstTitleLeftAligned 1
+Licensee: CEE 6410 Water Resources Systems Analysis      G240923|0002AO-GEN
+          Utah State University, Utah Water Research Laboratory     DCE3763
+          C:\Users\bsafe\OneDrive\Documents\GAMS\gamslice.txt
+          License Admin: David Rosenberg, david.rosenberg@usu.edu          
+          Other time limited license
+          The evaluation period of the license will expire on Dec 22, 2024
+Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
+GAMS 47.6.0   Copyright (C) 1987-2024 GAMS Development. All rights reserved
+--- Starting compilation
+--- Safely.Brett-CEE6410-HW#6Integer.gms(31) 3 Mb 1 Error
+*** Error   2 in C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\HW#6\Safely.Brett-CEE6410-HW#6Integer.gms
+    Identifier expected
+--- Safely.Brett-CEE6410-HW#6Integer.gms(68) 3 Mb 2 Errors
+*** Error 257 in C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\HW#6\Safely.Brett-CEE6410-HW#6Integer.gms
+    Solve statement not checked because of previous errors
+--- Safely.Brett-CEE6410-HW#6Integer.gms(70) 3 Mb 7 Errors
+*** Error 141 in C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\HW#6\Safely.Brett-CEE6410-HW#6Integer.gms
+    Symbol declared but no values have been assigned. Check for missing
+       data definition, assignment, data loading or implicit assignment
+       via a solve statement. Suppress with $onImplicitAssign.
+       A wild shot: You may have spurious commas in the explanatory
+       text of a declaration. Check symbol reference list.
+*** Error 141 in C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\HW#6\Safely.Brett-CEE6410-HW#6Integer.gms
+    Symbol declared but no values have been assigned. Check for missing
+       data definition, assignment, data loading or implicit assignment
+       via a solve statement. Suppress with $onImplicitAssign.
+       A wild shot: You may have spurious commas in the explanatory
+       text of a declaration. Check symbol reference list.
+*** Error 141 in C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\HW#6\Safely.Brett-CEE6410-HW#6Integer.gms
+    Symbol declared but no values have been assigned. Check for missing
+       data definition, assignment, data loading or implicit assignment
+       via a solve statement. Suppress with $onImplicitAssign.
+       A wild shot: You may have spurious commas in the explanatory
+       text of a declaration. Check symbol reference list.
+*** Error 141 in C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\HW#6\Safely.Brett-CEE6410-HW#6Integer.gms
+    Symbol declared but no values have been assigned. Check for missing
+       data definition, assignment, data loading or implicit assignment
+       via a solve statement. Suppress with $onImplicitAssign.
+       A wild shot: You may have spurious commas in the explanatory
+       text of a declaration. Check symbol reference list.
+*** Error 141 in C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\HW#6\Safely.Brett-CEE6410-HW#6Integer.gms
+    Symbol declared but no values have been assigned. Check for missing
+       data definition, assignment, data loading or implicit assignment
+       via a solve statement. Suppress with $onImplicitAssign.
+       A wild shot: You may have spurious commas in the explanatory
+       text of a declaration. Check symbol reference list.
+--- Safely.Brett-CEE6410-HW#6Integer.gms(70) 3 Mb 7 Errors
+*** Status: Compilation error(s)
+--- Job Safely.Brett-CEE6410-HW#6Integer.gms Stop 10/14/24 17:04:31 elapsed 0:00:00.011

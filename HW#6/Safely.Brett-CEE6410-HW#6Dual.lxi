@@ -1,0 +1,14 @@
+B 3 C o m p i l a t i o n
+B 77 Equation Listing    SOLVE DUAL_PLANTING Using LP From line 66
+D 80 COST
+D 85 PROFIT_CONSTRAIN
+B 93 Column Listing      SOLVE DUAL_PLANTING Using LP From line 66
+E 96 Y
+E 117 VCOST
+B 125 Range Statistics    SOLVE DUAL_PLANTING Using LP From line 66
+B 136 Model Statistics    SOLVE DUAL_PLANTING Using LP From line 66
+B 149 Solution Report     SOLVE DUAL_PLANTING Using LP From line 66
+F 182 COST
+F 186 PROFIT_CONSTRAIN
+G 193 Y
+G 204 VCOST

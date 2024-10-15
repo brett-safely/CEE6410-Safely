@@ -1,0 +1,34 @@
+B 3 C o m p i l a t i o n
+B 79 Equation Listing    SOLVE IrrigationModel Using MIP From line 68
+D 82 COST
+D 87 MaxCap
+D 98 MinReqUse
+D 109 MeetDemand
+D 116 RevenueEq
+D 121 IrrigatedAcresEq
+B 129 Column Listing      SOLVE IrrigationModel Using MIP From line 68
+E 132 I
+E 153 X
+E 178 TCOST
+E 185 RevenueGenerated
+E 192 AcresIrrigated
+B 206 Range Statistics    SOLVE IrrigationModel Using MIP From line 68
+B 217 Model Statistics    SOLVE IrrigationModel Using MIP From line 68
+B 230 Solution Report     SOLVE IrrigationModel Using MIP From line 68
+F 275 COST
+F 279 MaxCap
+F 290 MinReqUse
+F 301 MeetDemand
+F 310 RevenueEq
+F 314 IrrigatedAcresEq
+G 321 I
+G 329 X
+G 342 TCOST
+G 343 RevenueGenerated
+G 348 AcresIrrigated
+B 361 E x e c u t i o n
+I 361 X
+I 369 I
+I 375 TCOST
+I 376 RevenueGenerated
+I 377 AcresIrrigated

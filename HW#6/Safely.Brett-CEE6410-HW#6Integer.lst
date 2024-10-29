@@ -1,4 +1,4 @@
-GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/14/24 17:35:20 Page 1
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/24/24 15:25:54 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -74,7 +74,7 @@ C o m p i l a t i o n
 
 
 COMPILATION TIME     =        0.000 SECONDS      3 MB  47.6.0 c2de9d6d WEX-WEI
-GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/14/24 17:35:20 Page 2
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/24/24 15:25:54 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE IrrigationModel Using MIP From line 68
 
@@ -124,7 +124,7 @@ IrrigatedAcresEq(1)..  - X(hd,1) - X(ld,1) - X(pump,1) + AcresIrrigated(1) =E= 0
      
 IrrigatedAcresEq(2)..  - 0.333333333333333*X(hd,2) - 0.333333333333333*X(ld,2) - 0.333333333333333*X(pump,2) + AcresIrrigated(2) =E= 0 ; (LHS = 0)
      
-GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/14/24 17:35:20 Page 3
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/24/24 15:25:54 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE IrrigationModel Using MIP From line 68
 
@@ -201,7 +201,7 @@ AcresIrrigated(2)
      -300       RevenueEq
         1       IrrigatedAcresEq(2)
 
-GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/14/24 17:35:20 Page 4
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/24/24 15:25:54 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE IrrigationModel Using MIP From line 68
 
@@ -212,7 +212,7 @@ RHS       [min, max] : [ 1.000E+00, 3.000E+00] - Zero values observed as well
 Bound     [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
 Matrix    [min, max] : [ 3.333E-01, 1.000E+04]
 
-GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/14/24 17:35:20 Page 5
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/24/24 15:25:54 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE IrrigationModel Using MIP From line 68
 
@@ -224,8 +224,8 @@ BLOCKS OF VARIABLES           5     SINGLE VARIABLES           13
 NON ZERO ELEMENTS            41     DISCRETE VARIABLES          3
 
 
-GENERATION TIME      =        0.250 SECONDS      4 MB  47.6.0 c2de9d6d WEX-WEI
-GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/14/24 17:35:20 Page 6
+GENERATION TIME      =        0.016 SECONDS      4 MB  47.6.0 c2de9d6d WEX-WEI
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/24/24 15:25:54 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE IrrigationModel Using MIP From line 68
 
@@ -356,7 +356,7 @@ pump.2          .              .            +INF           20.0000
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/14/24 17:35:20 Page 7
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/24/24 15:25:54 Page 7
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
@@ -382,7 +382,7 @@ ld 1.000
 
 
 
-EXECUTION TIME       =        0.719 SECONDS      4 MB  47.6.0 c2de9d6d WEX-WEI
+EXECUTION TIME       =        0.172 SECONDS      4 MB  47.6.0 c2de9d6d WEX-WEI
 
 
 USER: CEE 6410 Water Resources Systems Analysis      G240923|0002AO-GEN
@@ -392,5 +392,5 @@ USER: CEE 6410 Water Resources Systems Analysis      G240923|0002AO-GEN
 
 **** FILE SUMMARY
 
-Input      C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\HW#6\Safely.Brett-CEE6410-HW#6Integer.gms
-Output     C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\HW#6\Safely.Brett-CEE6410-HW#6Integer.lst
+Input      C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\CEE6410-Safely\HW#6\Safely.Brett-CEE6410-HW#6Integer.gms
+Output     C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\CEE6410-Safely\HW#6\Safely.Brett-CEE6410-HW#6Integer.lst

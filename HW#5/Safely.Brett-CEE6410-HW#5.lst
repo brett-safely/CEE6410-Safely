@@ -1,4 +1,4 @@
-GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/09/24 19:07:12 Page 1
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/15/24 15:08:10 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -92,7 +92,7 @@ C o m p i l a t i o n
 
 
 COMPILATION TIME     =        0.000 SECONDS      3 MB  47.6.0 c2de9d6d WEX-WEI
-GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/09/24 19:07:12 Page 2
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/15/24 15:08:10 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE ReservoirOperation Using LP From line 84
 
@@ -150,7 +150,7 @@ REMAINING 3 ENTRIES SKIPPED
 
 FinalStorage..  storage(6) =G= 5 ; (LHS = 0, INFES = 5 ****)
      
-GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/09/24 19:07:12 Page 3
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/15/24 15:08:10 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE ReservoirOperation Using LP From line 84
 
@@ -249,7 +249,7 @@ spill(3)
         1       FlowA(3)
 
 REMAINING 3 ENTRIES SKIPPED
-GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/09/24 19:07:12 Page 4
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/15/24 15:08:10 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE ReservoirOperation Using LP From line 84
 
@@ -260,7 +260,7 @@ RHS       [min, max] : [ 1.000E+00, 9.000E+00] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 2.200E+00]
 
-GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/09/24 19:07:12 Page 5
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/15/24 15:08:10 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE ReservoirOperation Using LP From line 84
 
@@ -272,8 +272,8 @@ BLOCKS OF VARIABLES           5     SINGLE VARIABLES           25
 NON ZERO ELEMENTS            73
 
 
-GENERATION TIME      =        0.046 SECONDS      4 MB  47.6.0 c2de9d6d WEX-WEI
-GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/09/24 19:07:12 Page 6
+GENERATION TIME      =        0.031 SECONDS      4 MB  47.6.0 c2de9d6d WEX-WEI
+GAMS 47.6.0  c2de9d6d Sep 12, 2024          WEX-WEI x86 64bit/MS Windows - 10/15/24 15:08:10 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE ReservoirOperation Using LP From line 84
 
@@ -288,7 +288,7 @@ Solution Report     SOLVE ReservoirOperation Using LP From line 84
 **** MODEL STATUS      1 Optimal
 **** OBJECTIVE VALUE               31.5500
 
- RESOURCE USAGE, LIMIT          0.016 10000000000.000
+ RESOURCE USAGE, LIMIT          0.032 10000000000.000
  ITERATION COUNT, LIMIT        18    2147483647
 *** This solver runs with a community license.
 --- GMO setup time: 0.00s
@@ -299,7 +299,7 @@ Solution Report     SOLVE ReservoirOperation Using LP From line 84
 
 
 --- LP status (1): optimal.
---- Cplex Time: 0.02sec (det. 0.06 ticks)
+--- Cplex Time: 0.03sec (det. 0.06 ticks)
 
 
 Optimal solution found
@@ -418,7 +418,7 @@ Objective:           31.550000
                              0  UNBOUNDED
 
 
-EXECUTION TIME       =        0.140 SECONDS      4 MB  47.6.0 c2de9d6d WEX-WEI
+EXECUTION TIME       =        0.203 SECONDS      4 MB  47.6.0 c2de9d6d WEX-WEI
 
 
 USER: CEE 6410 Water Resources Systems Analysis      G240923|0002AO-GEN
@@ -428,5 +428,5 @@ USER: CEE 6410 Water Resources Systems Analysis      G240923|0002AO-GEN
 
 **** FILE SUMMARY
 
-Input      C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\HW#5\Safely.Brett-CEE6410-HW#5.gms
-Output     C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\HW#5\Safely.Brett-CEE6410-HW#5.lst
+Input      C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\CEE6410-Safely\HW#5\Safely.Brett-CEE6410-HW#5.gms
+Output     C:\Users\bsafe\OneDrive\Documents\CEE 6410 - Water Resources Systems Analysis\CEE6410-Safely\HW#5\Safely.Brett-CEE6410-HW#5.lst
